@@ -31,15 +31,33 @@ const MAX_NAME_LENGTH = 64;
  *   - Any extra field in raw, for example isAdmin, must NOT appear in the returned object.
  */
 function normalizeService(raw) {
-  // TODO Mission 1
-  if (raw.isAdmin !== null){
-    return false
+  if (raw.name !== String){
+    return null;
+  }
+  if (raw.name === null) {
+    return null;
+  }
+  if (length(raw.name) > 64) {
+    while (length(raw.name) > 64) {
+      (raw.name).pop();
+    }
+    return raw.name;
+  }
+  if (raw.status !== String || raw.status === null || raw.status !== ALLOWED_STATUS) {
+    return null;
+  }
+  if (raw.online !== Boolean || raw.online === null) {
+    if (raw.online !== "false") {
+      return null;
+    }
+  }
+  if (raw.latencyMs !== Number || raw.latencyMs === null) {
+    if (raw.latencyMs !== 0){
+      return null;
+    }
   }
   if (raw === null) {
-    return false
-  }
-  if (raw === "   "){
-    return false
+    return null;
   }
 }
 
