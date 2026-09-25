@@ -6,7 +6,7 @@
 //
 // Start from the worked example in examples/m3_case_fetch_spy.js.
 //
-// Author:
+// Author: Bri Edwards
 // =====================================================================
 
 (() => {

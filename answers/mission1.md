@@ -5,8 +5,6 @@
 Output of `npm run test:m1`, pasted or as a screenshot in `img/`:
 
 ```
-PS C:\Users\brian\FALL26-ASSIG1> npm run test:m1
-
 > cyse411-assignment1-secure-status-portal@1.0.0 test:m1
 > node tests/mission1.test.js
 
@@ -17,8 +15,7 @@ normalizeService()
   PASS  returns a NEW object, not the same reference
   FAIL  extra fields such as isAdmin are dropped
         Expected values to be strictly deep-equal:
-  FAIL  null is rejected
-        Cannot read properties of null (reading 'name')
+  PASS  null is rejected
   PASS  an array is rejected
   PASS  a string is rejected
   PASS  blank name is rejected
@@ -38,18 +35,14 @@ normalizeService()
   PASS  missing latencyMs is rejected
 
 parseStatusReport()
-  FAIL  invalid JSON fails safe
-        Expected values to be strictly deep-equal:
-  FAIL  missing services array fails safe
-        Expected values to be strictly deep-equal:
-  FAIL  services that is not an array fails safe
-        Expected values to be strictly deep-equal:
-  FAIL  JSON null fails safe
-        Expected values to be strictly deep-equal:
+  PASS  invalid JSON fails safe
+  PASS  missing services array fails safe
+  PASS  services that is not an array fails safe
+  PASS  JSON null fails safe
   FAIL  mixed report keeps valid entries and counts rejected ones
-        Cannot read properties of undefined (reading 'error')
+        Expected values to be strictly equal:
 
-14 passed, 10 failed
+19 passed, 5 failed
 ```
 
 ## Connections: Python to JavaScript

@@ -31,6 +31,10 @@ const MAX_NAME_LENGTH = 64;
  *   - Any extra field in raw, for example isAdmin, must NOT appear in the returned object.
  */
 function normalizeService(raw) {
+  let newraw;
+   if (raw === null || typeof raw !== "object" || Array.isArray(raw)) {
+    return null;
+  }
   if (raw.name !== String){
     return null;
   }
@@ -38,10 +42,7 @@ function normalizeService(raw) {
     return null;
   }
   if (length(raw.name) > 64) {
-    while (length(raw.name) > 64) {
-      (raw.name).pop();
-    }
-    return raw.name;
+    newraw.name = (raw.name).slice(0,63);
   }
   if (raw.status !== String || raw.status === null || raw.status !== ALLOWED_STATUS) {
     return null;
@@ -59,6 +60,11 @@ function normalizeService(raw) {
   if (raw === null) {
     return null;
   }
+  newraw.name = raw.name;
+  newraw.status = raw.status;
+  newraw.online = raw.online;
+  newraw.latencyMs = raw.latencyMs;
+  return newraw;
 }
 
 /**
@@ -71,7 +77,33 @@ function normalizeService(raw) {
  *   { services: [], rejected: 0, error: "invalid report" }
  */
 function parseStatusReport(jsonText) {
-  // TODO Mission 1
+  let report;
+  try {
+    report = JSON.parse(jsonText);
+  } catch (error) {
+    return { services: [], rejected: 0, error: "invalid report" };
+  }
+  if (
+    report === null ||
+    typeof report !== "object" ||
+    Array.isArray(report) ||
+    !Array.isArray(report.services)
+  ) {
+    return { services: [], rejected: 0, error: "invalid report" };
+  }
+
+  const services = [];
+  let rejected = 0;
+
+  for (const raw of report.services) {
+    const service = normalizeService(raw);
+    if (service === null) {
+      rejected += 1;
+    } else {
+      services.push(service);
+    }
+  }
+  return { services: services, rejected: rejected, error: null };
 }
 
 // Lets Node's require() see these functions. The browser simply ignores this block.

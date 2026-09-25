@@ -16,7 +16,30 @@ A legitimate click does nothing after my attack (log still reads "No purge reque
 Paste the full contents of `attacks/m2_runaway.js`, with one sentence per block:
 
 ```js
-// paste here
+(() => {
+  const zone = document.getElementById("danger-zone");
+  const original = document.getElementById("purge-btn");
+  //created a variable that will count how many times the button "runs away"
+  let counter = 0;
+
+  // removed the portal's legitimate click listener.
+  original.replaceWith(original.cloneNode(true));
+  // stopped keyboard users from reaching the button.
+  window.addEventListener('keydown', () => alert('Not today, buddy.'));
+  // made the button jump inside zone on every approach, no overlap.
+  zone.addEventListener('mouseover', () => movebtn())
+  function movebtn() {
+    counter ++;
+    original.style.left = 3 + 'px';
+    original.style.top = 3 + 'px';
+  }
+  // created a NEW element that shows the dodge counter.
+  console.log("Runaway counter: ", counter);
+  // my creative twist.
+  console.log("Couldn't catch me!");
+
+  console.log("[attack] runaway button installed");
+})();
 ```
 
 - **How do you remove the portal's original click handler without reloading?**
@@ -25,7 +48,7 @@ Paste the full contents of `attacks/m2_runaway.js`, with one sentence per block:
 
 - **How do you stop a keyboard user from triggering the button?**
 
-  > your answer
+  > By cloning it without the capability of being pressed
 
 - **How do you keep the button fully inside `#danger-zone` and off its previous position?**
 
@@ -49,7 +72,7 @@ The mouse trick is theater. The real problem is that attacker code ran in the op
 
 3. Which Unit 1.3 slide or takeaway does this map to?
 
-   > your answer
+   > Slide 20-23
 
 ## Documentation log
 
