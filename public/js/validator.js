@@ -32,6 +32,15 @@ const MAX_NAME_LENGTH = 64;
  */
 function normalizeService(raw) {
   // TODO Mission 1
+  if (raw.isAdmin !== null){
+    return false
+  }
+  if (raw === null) {
+    return false
+  }
+  if (raw === "   "){
+    return false
+  }
 }
 
 /**
